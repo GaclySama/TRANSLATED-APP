@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sora:wght@100..800&display=swap');
+
+* {
+  box-sizing: border-box;
+  color: #4D5562;
+  font-family: "Sora", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  margin: 0;
+  position: relative;
+}
+
+body {
+  background-color: #040711;
+  background-image: url("/src/assets/hero_img.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  min-height: 100dvh;
+}
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+hr {
+  border: 1px solid #394150;
+}
+
+h2 {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 5px;
+}
+
+.logo-container {
+  align-items: flex-end;
+  display: flex;
+  height: 10dvh;
+  justify-content: center;
+  width: 100%;
+}
+
+.logo {
+  height: auto;
+  width: 10rem;
+}
+
+.container {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 25px;
+  height: 90vh;
+  justify-content: space-evenly;
+  padding: 40px 60px;
+}
+
+.box {
+  background-color: #212936cc;
+  border-radius: 10px;
+  border: 2px solid #394150;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 350px;
+  max-width: 700px;
+  padding: 20px;
+  width: 100%;
+}
+
+.text-box {
+  background-color: transparent;
+  border-style: none;
+  color: #F9FAFB;
+  height: 100%;
+  outline: none;
+  resize: none;
+}
+
+.row {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.myButton {
+  align-items: center;
+  background-color: transparent;
+  border-radius: 10px;
+  border: none;
+  display: flex;
+  transition: 0.2s;
+}
+
+.myButton:hover {
+  transform: scale(1.1,1.1);
+}
+
+.selected {
+  background-color: #4D5562;
+  color: #F9FAFB;
+  transform: none !important;
+}
+
+.mini-buttons {
+  border: 2px solid #394150; 
+  padding: 7px;
+  margin-right: 5px;
+}
+
+.translate-button {
+  background-color: #3662E3;
+  border: 1px solid #7CA9F3;
+  padding: 8px 20px;
+}
+
+.translate-text {
+  color: #F9FAFB;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 5px;
+}
+
+@media ( width <= 1024px ) {
+  .container {
+    flex-wrap: wrap;
+    align-content: stretch;
+    padding: 40px 15px;
+  }
+}
