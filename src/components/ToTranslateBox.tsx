@@ -59,9 +59,9 @@ export const ToTranslateBox = () => {
         />
 
         <MyButton
-          flex
           leftIcon={ <SortAlfa /> }
           personalClass="translate-button"
+          styles={{ display: 'flex '}}
           text="Translate"
         />
       </div>
