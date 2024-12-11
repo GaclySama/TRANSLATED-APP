@@ -30,10 +30,10 @@ hr {
   border: 1px solid #394150;
 }
 
-h2 {
-  font-size: 0.875rem;
-  font-weight: 500;
-  margin: 5px;
+option {
+  font-weight: bold;
+  background-color: #4D5562;
+  color: #F9FAFB;
 }
 
 .logo-container {
@@ -60,7 +60,7 @@ h2 {
 
 .box {
   background-color: #212936cc;
-  border-radius: 10px;
+  border-radius: 30px;
   border: 2px solid #394150;
   display: flex;
   flex-direction: column;
@@ -89,8 +89,8 @@ h2 {
 .myButton {
   align-items: center;
   background-color: transparent;
+  border: 1px solid transparent;
   border-radius: 10px;
-  border: none;
   display: flex;
   transition: 0.2s;
 }
@@ -99,29 +99,36 @@ h2 {
   transform: scale(1.1,1.1);
 }
 
+.myButton:active {
+  border: 1px solid white;
+}
+
+.text-button {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 5px;
+}
+
 .selected {
   background-color: #4D5562;
   color: #F9FAFB;
+  padding: 6px 10px;
   transform: none !important;
 }
 
 .mini-buttons {
   border: 2px solid #394150; 
-  padding: 7px;
   margin-right: 5px;
+  padding: 7px;
 }
 
 .translate-button {
   background-color: #3662E3;
   border: 1px solid #7CA9F3;
-  padding: 8px 20px;
-}
-
-.translate-text {
   color: #F9FAFB;
   font-size: 1rem;
   font-weight: 500;
-  padding: 5px;
+  padding: 8px 20px;
 }
 
 @media ( width <= 1024px ) {

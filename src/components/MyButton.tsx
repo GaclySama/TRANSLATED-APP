@@ -1,32 +1,43 @@
 
 interface Props {
-  children: JSX.Element | JSX.Element[];
-  styles?: React.CSSProperties;
   flex?: boolean;
-  selected?: boolean;
+  id?: string;
+  leftIcon?: JSX.Element;
   personalClass?: string;
+  rigthIcon?: JSX.Element;
+  selected?: boolean;
+  styles?: React.CSSProperties;
+  text?: string;
+
+  functionEvent?: any;
 }
 
 export const MyButton = ({ 
-  children, styles, flex, selected, personalClass = '', 
+  flex, id, personalClass = '', rigthIcon, selected, styles, text,leftIcon, functionEvent = () => {}
 }: Props) => {
 
-  const handleEvent = () => {
+  const handleEvent = ( e: React.MouseEvent<HTMLButtonElement> ) => {
 
+    if ( id ) {
+      functionEvent( id );
+    } else {
+      functionEvent( e );
+    }
   }
 
-  
   return (
     <button 
-      className={`myButton ${ personalClass } ${ selected ? 'selected' : '' }`} 
+      className={`myButton text-button ${ personalClass } ${ selected ? 'selected' : '' }`} 
       style={{
-        ...styles,
         display: flex ? 'flex' : '',
-        color: 'white'
+        ...styles,
       }}
       onClick={ handleEvent }
+      disabled={ selected }
     >
-      { children }
+      { leftIcon && leftIcon }
+      { text && text }
+      { rigthIcon && rigthIcon }
     </button>
   )
 }

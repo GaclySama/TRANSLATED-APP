@@ -1,13 +1,21 @@
-import { Box } from './Box';
-
+import { useState } from 'react';
+import { ToTranslateBox } from './ToTranslateBox';
+import { TranslatedBox } from './TranslatedBox';
+import { TraductorProvider } from '../context/TraductorProvider';
 export const TranslationBoxes = () => {
+
+  const [text, setText] = useState('Hello, how are you?');
+  const [translatedText, setTranslatedText] = useState('');
+
   return (
-    <main className="container">
+    <TraductorProvider>
+      <main className="container">
 
-      <Box />
+        <ToTranslateBox setText={ setText } text={ text } />
 
-      <Box />
+        <TranslatedBox translatedText={ translatedText } />
 
-    </main>
+      </main>
+    </TraductorProvider>
   )
 }
