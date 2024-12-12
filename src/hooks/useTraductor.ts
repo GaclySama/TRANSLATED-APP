@@ -2,15 +2,14 @@ import { ChangeEvent, useContext, useState } from 'react';
 import { TraductorContext } from '../context/TraductorContext';
 
 
-
-
 export const useTraductor = () => {
 
-  const { traductorState, dispatch } = useContext( TraductorContext );
+  const { traductorState  } = useContext( TraductorContext );
   const [text, setText] = useState('Hello, how are you?');
 
 
   // TODO: Dispatch
+
 
 
   const handleText = ( { target }: ChangeEvent<HTMLTextAreaElement> ) => {

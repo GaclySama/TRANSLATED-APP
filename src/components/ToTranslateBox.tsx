@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { Copy, SortAlfa, SoundMaxFill } from '../assets';
-import { MyButton } from './MyButton';
+
 import { useTraductor } from '../hooks/useTraductor';
 
+import { Copy, SortAlfa, SoundMaxFill } from '../assets';
+import { MyButton } from './MyButton';
 
 export const ToTranslateBox = () => {
 
   const [selected, setSelected] = useState('en');
-  const { copyToClipboard, languages, text, handleText } = useTraductor();
+  const { copyToClipboard, languages, text, handleText, languagesToUse } = useTraductor();
 
   return (
     <article className="box">
@@ -29,7 +30,7 @@ export const ToTranslateBox = () => {
         }
 
         <select className="myButton text-button">
-          { languages.map( language => (
+          { languagesToUse.map( language => (
             <option key={ language.rfc } value={ language.rfc }>{ language.name }</option>
           ))}
         </select>

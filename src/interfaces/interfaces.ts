@@ -1,13 +1,13 @@
 
 export interface LanguageAPIResponse {
-  [key: number]:     Data;
-  code:    number;
+  data   : Data ;
+  code   : number;
   message: string;
-  count:   number;
+  count  : number;
 }
 
 interface Data {
-  name:    string;
+  name   : string;
   rfc3066: string;
   iso6391: string;
   iso6392: string;
@@ -15,22 +15,23 @@ interface Data {
 
 export interface Languages {
   name: string;
-  rfc: string;
+  rfc : string;
 }
 
 export interface InitialState {
-  languages: Languages[],
-  translateTo: Languages[],
+  languages     : Languages[],
+  translateTo   : Languages[],
   languagesToUse: Languages[],
-  translated: string,
-  detect: boolean,
+  translated    : string,
+  detect        : boolean,
 }
 
 export interface ReducerTypes {
-  swipe: string;
+  swipe  : string;
   traduct: string;
 }
 
 export type ActionType = 
-  | { type: 'swipe'; payload: InitialState }
-  | { type: 'traduct'; payload: InitialState }
+  | { type: 'swipe', payload: InitialState }
+  | { type: 'traduct', payload: InitialState }
+  | { type: 'loadLanguages', payload: LanguageAPIResponse }

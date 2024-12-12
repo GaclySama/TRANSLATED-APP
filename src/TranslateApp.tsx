@@ -2,7 +2,7 @@ import { Logo } from './assets/Logo';
 import { TranslationBoxes } from './components/TranslationBoxes';
 
 
-const TranslateApp = () => {
+export const TranslateApp = () => {
 
   return (
     <>
@@ -11,6 +11,4 @@ const TranslateApp = () => {
       <TranslationBoxes />
     </>
   )
-}
-
-export default TranslateApp;
+};

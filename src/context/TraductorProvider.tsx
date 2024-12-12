@@ -1,15 +1,18 @@
 import { PropsWithChildren, useReducer } from 'react';
+
 import { TraductorContext } from './TraductorContext';
-import { INITIAL_STATE } from '../data/data';
 import { traductorReducer } from './traductorReducer';
+import type { InitialState } from '../interfaces/interfaces';
 
 
-interface Props extends PropsWithChildren {};
+interface Props extends PropsWithChildren {
+  data: InitialState;
+};
 
 
-export const TraductorProvider = ({ children }: Props ) => {
+export const TraductorProvider = ({ children, data }: Props ) => {
 
-  const [ traductorState, dispatch ] = useReducer( traductorReducer, INITIAL_STATE )
+  const [ traductorState, dispatch ] = useReducer( traductorReducer, data );
 
   return (
     <TraductorContext.Provider value={{

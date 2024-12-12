@@ -1,18 +1,15 @@
+import { useState } from 'react';
+
+import { useTraductor } from '../hooks/useTraductor';
 import { Copy, HorizontalTopLeftMain, SoundMaxFill } from '../assets';
 import { MyButton } from './MyButton';
-import { useState } from 'react';
-import { useTraductor } from '../hooks/useTraductor';
 
 
 
 export const TranslatedBox = () => {
 
   const [selected, setSelected] = useState('fr-FR');
-  const { copyToClipboard, translateTo, translated } = useTraductor();
-
-  const handleButtonEvent = ( e: any ) => {
-    setSelected( e );
-  };
+  const { copyToClipboard, translateTo, translated, languagesToUse } = useTraductor();
 
   return (
     <article className="box">
@@ -21,7 +18,7 @@ export const TranslatedBox = () => {
 
         {
           translateTo.map( language => (
-            <MyButton functionEvent={ handleButtonEvent }
+            <MyButton functionEvent={ setSelected }
               id={ language.rfc }
               key={ language.rfc } 
               selected={ selected === language.rfc }
@@ -31,7 +28,7 @@ export const TranslatedBox = () => {
         }
 
         <select className="myButton text-button" style={{ marginRight: 'auto' }}>
-          { translateTo.map( language => (
+          { languagesToUse.map( language => (
             <option key={ language.rfc } value={ language.rfc }>{ language.name }</option>
           ))}
         </select>

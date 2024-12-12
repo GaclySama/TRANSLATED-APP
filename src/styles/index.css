@@ -36,6 +36,12 @@ option {
   color: #F9FAFB;
 }
 
+select {
+  width: fit-content; /* Se adapta al contenido */
+  max-width: 100%; /* Evita el desbordamiento */
+}
+
+
 .logo-container {
   align-items: flex-end;
   display: flex;
@@ -84,37 +90,41 @@ option {
   align-items: center;
   display: flex;
   flex-direction: row;
+  gap: 2px;
 }
 
 .myButton {
   align-items: center;
   background-color: transparent;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   border-radius: 10px;
   display: flex;
   transition: 0.2s;
+  padding: 6px 10px;
 }
 
 .myButton:hover {
-  transform: scale(1.1,1.1);
+  background-color: #353d4acc;
+  color: #c8cbd2;
 }
 
 .myButton:active {
-  border: 1px solid white;
+  border: 2px solid #4D5562;
 }
+
+.selected {
+  background-color: #4D5562 !important;
+  color: #F9FAFB !important;
+  padding: 6px 10px;
+  transform: none !important;
+}
+
 
 .text-button {
   font-size: 0.875rem;
   font-weight: 500;
-  margin: 5px;
 }
 
-.selected {
-  background-color: #4D5562;
-  color: #F9FAFB;
-  padding: 6px 10px;
-  transform: none !important;
-}
 
 .mini-buttons {
   border: 2px solid #394150; 
@@ -123,7 +133,7 @@ option {
 }
 
 .translate-button {
-  background-color: #3662E3;
+  background-color: #3662E3 !important;
   border: 1px solid #7CA9F3;
   color: #F9FAFB;
   font-size: 1rem;
