@@ -1,5 +1,5 @@
 export { MyButton } from './MyButton';
-export { ToTranslateBox } from './ToTranslateBox';
-export { TranslatedBox } from './TranslatedBox';
+export { FromTranslateBox } from './FromTranslateBox';
+export { ToTranslatedBox } from './ToTranslateBox';
 export { TranslationBoxes } from './TranslationBoxes';
 

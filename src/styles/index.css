@@ -37,10 +37,9 @@ option {
 }
 
 select {
-  width: fit-content; /* Se adapta al contenido */
-  max-width: 100%; /* Evita el desbordamiento */
+  max-width: 100px;
+  text-overflow: ellipsis;
 }
-
 
 .logo-container {
   align-items: flex-end;
@@ -146,5 +145,9 @@ select {
     flex-wrap: wrap;
     align-content: stretch;
     padding: 40px 15px;
+  }
+  .myButton {
+    max-width: 100px;
+    text-overflow: ellipsis;
   }
 }

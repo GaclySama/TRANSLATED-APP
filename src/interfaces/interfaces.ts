@@ -19,11 +19,13 @@ export interface Languages {
 }
 
 export interface InitialState {
-  languages     : Languages[],
-  translateTo   : Languages[],
-  languagesToUse: Languages[],
-  translated    : string,
   detect        : boolean,
+  from          : Languages[],
+  languagesToUse: Languages[],
+  selectFrom    : Languages,
+  selectTo      : Languages,
+  to            : Languages[],
+  translated    : string,
 }
 
 export interface ReducerTypes {
@@ -32,6 +34,7 @@ export interface ReducerTypes {
 }
 
 export type ActionType = 
-  | { type: 'swipe', payload: InitialState }
-  | { type: 'traduct', payload: InitialState }
-  | { type: 'loadLanguages', payload: LanguageAPIResponse }
+  | { type: 'swipe' }
+  | { type: 'changeFROMLanguages', payload: Languages }
+  | { type: 'changeTOLanguages' | 'changeFROMLanguages', payload: Languages }
+  | { type: 'selectLanguage', payload: Languages }

@@ -1,4 +1,4 @@
-import { ToTranslateBox, TranslatedBox } from './';
+import { FromTranslateBox, ToTranslatedBox } from './';
 
 import { TraductorProvider } from '../context/TraductorProvider';
 import { useFetchLanguages } from '../hooks/useFetchLanguages';
@@ -23,9 +23,9 @@ export const TranslationBoxes = () => {
             <TraductorProvider data={ data }>
               <main className="container">
 
-                <ToTranslateBox />
+                <FromTranslateBox />
 
-                <TranslatedBox />
+                <ToTranslatedBox />
 
               </main>
             </TraductorProvider>

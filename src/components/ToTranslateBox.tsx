@@ -1,50 +1,52 @@
-import { useState } from 'react';
 
 import { useTraductor } from '../hooks/useTraductor';
-
-import { Copy, SortAlfa, SoundMaxFill } from '../assets';
+import { Copy, HorizontalTopLeftMain, SoundMaxFill } from '../assets';
 import { MyButton } from './MyButton';
 
-export const ToTranslateBox = () => {
 
-  const [selected, setSelected] = useState('en');
-  const { copyToClipboard, languages, text, handleText, languagesToUse } = useTraductor();
+
+export const ToTranslatedBox = () => {
+
+  const { 
+    to, translated, languagesToUse, selectTo,
+    copyToClipboard, ChangeSelectedLanguage, swipeLanguages
+  } = useTraductor();
 
   return (
     <article className="box">
 
       <div className="row">
-        <MyButton
-          text="Detect Language" 
-        />
-        
+
         {
-          languages.map( language => (
-            <MyButton functionEvent={ setSelected }
-              key={ language.rfc }
+          to.map( language => (
+            <MyButton functionEvent={ () => ChangeSelectedLanguage({ type: 'changeTOLanguages', payload: language }) }
               id={ language.rfc }
+              key={ language.rfc } 
+              selected={ selectTo.rfc === language.rfc }
               text={ language.name }
-              selected={ selected === language.rfc }
             />
           ))
         }
 
-        <select className="myButton text-button">
+        <select className="myButton text-button" style={{ marginRight: 'auto' }}>
           { languagesToUse.map( language => (
             <option key={ language.rfc } value={ language.rfc }>{ language.name }</option>
           ))}
         </select>
+
+        <MyButton functionEvent={ swipeLanguages }
+          leftIcon={ <HorizontalTopLeftMain /> }
+          personalClass="mini-buttons"  
+        />
       </div>
     
       <hr />
 
       <textarea 
         className="text-box" 
-        onChange={ handleText }
-        value={ text }
+        value={ translated }
+        disabled
       />
-
-      <small className="row" style={{ justifyContent: 'flex-end', marginTop: '0' }}>{ text.length}/500</small>
 
       <div className="row">
         <MyButton 
@@ -54,16 +56,8 @@ export const ToTranslateBox = () => {
 
         <MyButton 
           leftIcon={ <Copy /> }
-          functionEvent={ () => copyToClipboard( text ) }
-          personalClass="mini-buttons"
-          styles={{ marginRight: 'auto'}}
-        />
-
-        <MyButton
-          leftIcon={ <SortAlfa /> }
-          personalClass="translate-button"
-          styles={{ display: 'flex '}}
-          text="Translate"
+          functionEvent={ () => copyToClipboard( translated ) }
+          personalClass="mini-buttons"  
         />
       </div>
 
