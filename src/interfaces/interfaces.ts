@@ -15,7 +15,7 @@ interface Data {
 
 export interface Languages {
   name: string;
-  rfc : string;
+  iso : string;
 }
 
 export interface InitialState {

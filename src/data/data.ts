@@ -5,30 +5,30 @@ export const INITIAL_STATE: InitialState = {
   from: [
     { 
       name: "English",
-      rfc: 'en',
+      iso: 'en',
     },
     { 
       name: "French",
-      rfc: 'fr-FR',
+      iso: 'fr',
     },
   ],
   to: [
     { 
       name: "French",
-      rfc: 'fr-FR',
+      iso: 'fr',
     },
     { 
       name: "Espanish",
-      rfc: 'es-ES',
+      iso: 'es',
     },
   ],
   selectFrom: { 
     name: "English",
-    rfc: 'en',
+    iso: 'en',
   },
   selectTo: { 
     name: "French",
-    rfc: 'fr-FR',
+    iso: 'fr',
   },
   languagesToUse: [],
   translated: 'Bonjour comment allez-vous?',

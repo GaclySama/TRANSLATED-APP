@@ -22,10 +22,10 @@ export const FromTranslateBox = () => {
         {
           from.map( language => (
             <MyButton functionEvent={ () => ChangeSelectedLanguage({ type: 'changeFROMLanguages', payload: language }) }
-              key={ language.rfc }
-              id={ language.rfc }
+              key={ language.iso }
+              id={ language.iso }
               text={ language.name }
-              selected={ selectFrom.rfc === language.rfc }
+              selected={ selectFrom.iso === language.iso }
             />
           ))
         }
@@ -33,8 +33,8 @@ export const FromTranslateBox = () => {
         <select className="myButton text-button">
           { languagesToUse.map( language => (
             <option 
-              key={ language.rfc } 
-              value={ language.rfc }
+              key={ language.iso } 
+              value={ language.iso }
               onClick={ () => {} }
             >{ language.name }</option>
           ))}

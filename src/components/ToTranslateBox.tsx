@@ -20,9 +20,9 @@ export const ToTranslatedBox = () => {
         {
           to.map( language => (
             <MyButton functionEvent={ () => ChangeSelectedLanguage({ type: 'changeTOLanguages', payload: language }) }
-              id={ language.rfc }
-              key={ language.rfc } 
-              selected={ selectTo.rfc === language.rfc }
+              id={ language.iso }
+              key={ language.iso } 
+              selected={ selectTo.iso === language.iso }
               text={ language.name }
             />
           ))
@@ -30,7 +30,7 @@ export const ToTranslatedBox = () => {
 
         <select className="myButton text-button" style={{ marginRight: 'auto' }}>
           { languagesToUse.map( language => (
-            <option key={ language.rfc } value={ language.rfc }>{ language.name }</option>
+            <option key={ language.iso } value={ language.iso }>{ language.name }</option>
           ))}
         </select>
 

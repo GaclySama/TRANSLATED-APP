@@ -16,10 +16,10 @@ export const getLanguages = async () => {
     const newData: Languages[] = Object.values( rest )
       .map((language) => ({
         name: Formatter.notLonger( language.name ),
-        rfc: language.rfc3066,
+        iso: language.iso6391,
       }))
       .filter(( language, index, newData ) =>       
-        newData.findIndex((item) => item.name === language.name ) === index
+        newData.findIndex((item) => item.iso === language.iso ) === index
       );
 
     return {

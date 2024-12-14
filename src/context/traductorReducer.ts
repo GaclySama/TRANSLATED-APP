@@ -6,13 +6,13 @@ export const traductorReducer = (  state: InitialState, action: ActionType ): In
   switch ( action.type ) {
     case 'swipe':
       {
-        const updatedFrom = state.from.some( (language) => language.rfc === state.selectTo.rfc)
+        const updatedFrom = state.from.some( (language) => language.iso === state.selectTo.iso)
         ? state.from
-        : [{ name: state.selectTo.name, rfc: state.selectTo.rfc }, ...state.from].slice(0, 2);
+        : [{ name: state.selectTo.name, iso: state.selectTo.iso }, ...state.from].slice(0, 2);
     
-      const updatedTo = state.to.some((language) => language.rfc === state.selectFrom.rfc )
+      const updatedTo = state.to.some((language) => language.iso === state.selectFrom.iso )
         ? state.to
-        : [{ name: state.selectFrom.name, rfc: state.selectFrom.rfc }, ...state.to].slice(0, 2);
+        : [{ name: state.selectFrom.name, iso: state.selectFrom.iso }, ...state.to].slice(0, 2);
 
       return {
         ...state,
@@ -26,19 +26,19 @@ export const traductorReducer = (  state: InitialState, action: ActionType ): In
     case 'changeFROMLanguages': 
       return {
         ...state,
-        from: state.from.filter( language => ( action.payload.rfc === language.rfc ) ? state.from : [ action.payload, state.from[1]] ),
+        from: state.from.filter( language => ( action.payload.iso === language.iso ) ? state.from : [ action.payload, state.from[1]] ),
         selectFrom: action.payload,
-        selectTo: ( action.payload.rfc === state.selectTo.rfc ) 
-                    ? ( ( action.payload.rfc === state.to[1].rfc ) ? state.to[0] : state.to[1] ) 
+        selectTo: ( action.payload.iso === state.selectTo.iso ) 
+                    ? ( ( action.payload.iso === state.to[1].iso ) ? state.to[0] : state.to[1] ) 
                     : state.selectTo,
        };
 
     case 'changeTOLanguages': 
       return {
         ...state,
-        to: state.to.filter( language => ( action.payload.rfc === language.rfc ) ? state.to : [ action.payload, state.to[1]] ),
+        to: state.to.filter( language => ( action.payload.iso === language.iso ) ? state.to : [ action.payload, state.to[1]] ),
         selectTo: action.payload,
-        selectFrom: ( action.payload.rfc === state.selectFrom.rfc ) ? ( ( action.payload.rfc === state.from[1].rfc ) ? state.from[0] : state.from[1] ) : state.selectFrom,
+        selectFrom: ( action.payload.iso === state.selectFrom.iso ) ? ( ( action.payload.iso === state.from[1].iso ) ? state.from[0] : state.from[1] ) : state.selectFrom,
        };
 
     case 'selectLanguage':

@@ -29,7 +29,7 @@ export const useFetchLanguages = () => {
     };
 
     initializeState();
-  });
+  }, []);
 
   return {
     data,
