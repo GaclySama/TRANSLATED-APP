@@ -35,15 +35,30 @@ export const useTraductor = () => {
     navigator.clipboard.writeText( text );
   };
 
+  const speak = ( textToSpeak: string ) => {
+    
+    if ( textToSpeak.trim().length <= 0 ) return;
+
+    const utterance = new SpeechSynthesisUtterance( textToSpeak );
+
+    const voices = speechSynthesis.getVoices();
+    console.log(voices);
+    
+    utterance.voice = voices[0];
+
+    speechSynthesis.speak(utterance);
+  }
+
   return {
     // Properties
     ...traductorState,
     text,
 
     // Methods
-    copyToClipboard,
-    swipeLanguages,
-    handleText,
     ChangeSelectedLanguage,
+    copyToClipboard,
+    handleText,
+    speak,
+    swipeLanguages,
   };
 }

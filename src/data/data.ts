@@ -18,8 +18,8 @@ export const INITIAL_STATE: InitialState = {
       rfc: 'fr-FR',
     },
     { 
-      name: "Español",
-      rfc: 'es',
+      name: "Espanish",
+      rfc: 'es-ES',
     },
   ],
   selectFrom: { 

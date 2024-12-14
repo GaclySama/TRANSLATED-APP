@@ -19,7 +19,7 @@ export const getLanguages = async () => {
         rfc: language.rfc3066,
       }))
       .filter(( language, index, newData ) =>       
-        newData.findIndex((item) => item.name === language.name) === index
+        newData.findIndex((item) => item.name === language.name ) === index
       );
 
     return {

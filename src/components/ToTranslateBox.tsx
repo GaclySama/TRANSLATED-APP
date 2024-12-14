@@ -9,7 +9,7 @@ export const ToTranslatedBox = () => {
 
   const { 
     to, translated, languagesToUse, selectTo,
-    copyToClipboard, ChangeSelectedLanguage, swipeLanguages
+    copyToClipboard, ChangeSelectedLanguage, swipeLanguages, speak
   } = useTraductor();
 
   return (
@@ -49,14 +49,14 @@ export const ToTranslatedBox = () => {
       />
 
       <div className="row">
-        <MyButton 
+
+        <MyButton functionEvent={ () => speak( translated ) }
           leftIcon={ <SoundMaxFill /> }
           personalClass="mini-buttons"
         />
 
-        <MyButton 
+        <MyButton functionEvent={ () => copyToClipboard( translated ) }
           leftIcon={ <Copy /> }
-          functionEvent={ () => copyToClipboard( translated ) }
           personalClass="mini-buttons"  
         />
       </div>

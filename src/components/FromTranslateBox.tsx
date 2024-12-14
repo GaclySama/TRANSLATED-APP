@@ -8,7 +8,7 @@ export const FromTranslateBox = () => {
 
   const {
     from, selectFrom, text, languagesToUse, 
-    copyToClipboard, handleText, ChangeSelectedLanguage
+    copyToClipboard, handleText, ChangeSelectedLanguage, speak
   } = useTraductor();
 
   return (
@@ -52,14 +52,13 @@ export const FromTranslateBox = () => {
       <small className="row" style={{ justifyContent: 'flex-end', marginTop: '0' }}>{ text.length}/500</small>
 
       <div className="row">
-        <MyButton 
+        <MyButton functionEvent={ () => speak( text ) }
           leftIcon={ <SoundMaxFill /> }
           personalClass="mini-buttons"
         />
 
-        <MyButton 
+        <MyButton functionEvent={ () => copyToClipboard( text ) }
           leftIcon={ <Copy /> }
-          functionEvent={ () => copyToClipboard( text ) }
           personalClass="mini-buttons"
           styles={{ marginRight: 'auto'}}
         />
