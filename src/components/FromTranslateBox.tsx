@@ -7,8 +7,8 @@ import { MyButton } from './MyButton';
 export const FromTranslateBox = () => {
 
   const {
-    from, selectFrom, text, languagesToUse, 
-    copyToClipboard, handleText, ChangeSelectedLanguage, speak
+    from, selectFrom, text, languagesToUse, fetching,
+    copyToClipboard, handleText, changeSelectedLanguage, speak, selectLanguage, translateText
   } = useTraductor();
 
   return (
@@ -21,7 +21,7 @@ export const FromTranslateBox = () => {
         
         {
           from.map( language => (
-            <MyButton functionEvent={ () => ChangeSelectedLanguage({ type: 'changeFROMLanguages', payload: language }) }
+            <MyButton functionEvent={ () => changeSelectedLanguage({ type: 'changeFROMLanguages', payload: language }) }
               key={ language.iso }
               id={ language.iso }
               text={ language.name }
@@ -30,12 +30,14 @@ export const FromTranslateBox = () => {
           ))
         }
 
-        <select className="myButton text-button">
+        <select 
+          onChange={ ( e ) => selectLanguage({ type: 'selectFROMLanguage', e }) }
+          className="myButton text-button"
+        >
           { languagesToUse.map( language => (
             <option 
               key={ language.iso } 
-              value={ language.iso }
-              onClick={ () => {} }
+              value={ JSON.stringify( language ) }
             >{ language.name }</option>
           ))}
         </select>
@@ -63,11 +65,12 @@ export const FromTranslateBox = () => {
           styles={{ marginRight: 'auto'}}
         />
 
-        <MyButton
+        <MyButton functionEvent={ translateText }
           leftIcon={ <SortAlfa /> }
           personalClass="translate-button"
           styles={{ display: 'flex '}}
           text="Translate"
+          selected={ fetching }
         />
       </div>
 

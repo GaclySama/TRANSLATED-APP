@@ -147,7 +147,12 @@ select {
     padding: 40px 15px;
   }
   .myButton {
-    max-width: 100px;
     text-overflow: ellipsis;
+  }
+}
+
+@media ( width <= 600px ) {
+  select {
+    width: 20px;
   }
 }

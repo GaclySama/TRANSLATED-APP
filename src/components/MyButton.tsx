@@ -7,12 +7,14 @@ interface Props {
   selected?: boolean;
   styles?: React.CSSProperties;
   text?: string;
+  disabled?: boolean;
 
   functionEvent?: any;
 }
 
 export const MyButton = ({ 
-  id, personalClass = '', rigthIcon, selected, styles, text,leftIcon, functionEvent = () => {}
+  id, personalClass = '', rigthIcon, selected, styles, text,leftIcon,
+  functionEvent = () => {}
 }: Props) => {
 
   const handleEvent = ( e: React.MouseEvent<HTMLButtonElement> ) => {

@@ -13,6 +13,39 @@ interface Data {
   iso6392: string;
 }
 
+export interface TraductionAPIResponse {
+  responseData:    ResponseData;
+  quotaFinished:   boolean;
+  mtLangSupported: null;
+  responseDetails: string;
+  responseStatus:  number;
+  responderId:     null;
+  exception_code:  null;
+  matches:         Match[];
+}
+
+export interface Match {
+  id:                 string;
+  segment:            string;
+  translation:        string;
+  source:             string;
+  target:             string;
+  quality:            string;
+  reference:          null;
+  "usage-count":      number;
+  subject:            string;
+  "created-by":       string;
+  "last-updated-by":  string;
+  "create-date":      Date;
+  "last-update-date": Date;
+  match:              number;
+}
+
+export interface ResponseData {
+  translatedText: string;
+  match:          number;
+}
+
 export interface Languages {
   name: string;
   iso : string;
@@ -25,16 +58,14 @@ export interface InitialState {
   selectFrom    : Languages,
   selectTo      : Languages,
   to            : Languages[],
+  text          : string, 
   translated    : string,
-}
-
-export interface ReducerTypes {
-  swipe  : string;
-  traduct: string;
 }
 
 export type ActionType = 
   | { type: 'swipe' }
   | { type: 'changeFROMLanguages', payload: Languages }
   | { type: 'changeTOLanguages' | 'changeFROMLanguages', payload: Languages }
-  | { type: 'selectLanguage', payload: Languages }
+  | { type: 'changeText', payload: string }
+  | { type: 'selectFROMLanguage' | 'selectTOLanguage', payload: Languages }
+  | { type: 'translate', payload: string }

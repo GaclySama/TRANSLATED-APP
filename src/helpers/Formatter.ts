@@ -4,6 +4,6 @@
 export class Formatter {
 
   static notLonger( string: string ) { 
-    return `${string.split(' ', 1 )}`;
+    return string.split(' ', 1 ).toString();
   }
 }

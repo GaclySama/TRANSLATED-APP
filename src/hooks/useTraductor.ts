@@ -1,12 +1,19 @@
 import { ChangeEvent, useContext, useState } from 'react';
 import { TraductorContext } from '../context/TraductorContext';
 import { Languages } from '../interfaces/interfaces';
+import { getTextTranslated } from '../actions/getTextTranslated';
 
+
+
+const voices = speechSynthesis.getVoices();
 
 export const useTraductor = () => {
 
   const { traductorState, dispatch } = useContext( TraductorContext );
-  const [text, setText] = useState('Hello, how are you?');
+  const [ prevText, setPrevText ] = useState('Hello, how are you?');
+  const [ fetching, setFetching ] = useState( false );
+
+  const { selectFrom, selectTo, text, translated } = traductorState;
 
 
   // * Dispatch
@@ -15,36 +22,49 @@ export const useTraductor = () => {
     return dispatch({ type: 'swipe' });
   };
 
-  const ChangeSelectedLanguage = ( {type, payload} : { type: 'changeTOLanguages' | 'changeFROMLanguages', payload: Languages } ) => {
+  const changeSelectedLanguage = ( { type, payload } : { type: 'changeTOLanguages' | 'changeFROMLanguages', payload: Languages } ) => {
+    setPrevText( '' );
     return dispatch({ type, payload });
   };
 
-
-  // TODO: Dispatch: selectLanguage-translateText-detectLanguage
-
-
-  const handleText = ( { target }: ChangeEvent<HTMLTextAreaElement> ) => {
-    const { value } = target;
-    
-    if ( value.length > 500 ) return;
-    setText( value );
+  const selectLanguage = (  { type, e }: {type: 'selectFROMLanguage' | 'selectTOLanguage', e: React.ChangeEvent<HTMLSelectElement>} ) => {
+    setPrevText( '' );
+    dispatch({ type: type, payload: JSON.parse( e.target.value ) })
   };
 
+  const translateText = async () => {
+
+    if ( fetching || ( prevText === text && translated !== '' ) ) return;
+    setFetching( true );
+
+    dispatch({ type: 'translate' , payload: 'Loading...' } );
+    
+    const { textTraduced } = await getTextTranslated({ text, from: selectFrom.iso, to: selectTo.iso });
+
+    setFetching(false);
+    setPrevText( text );
+
+    dispatch({ type: 'translate' ,payload: textTraduced } );
+  }
+
+  // TODO: Dispatch: detectLanguage
+
+  const handleText = ( { target }: ChangeEvent<HTMLTextAreaElement> ) => {
+    if ( target.value.length > 500 ) return;
+    dispatch({ type: 'changeText', payload: target.value });
+  };
+
+
   const copyToClipboard = ( text: string ) => {
-    if ( text.length === 0 )  return;
+    if ( text.trim().length === 0 )  return;
     navigator.clipboard.writeText( text );
   };
 
-  const speak = ( textToSpeak: string ) => {
-    
+  const speak = async ( textToSpeak: string ) => {    
     if ( textToSpeak.trim().length <= 0 ) return;
 
-    const utterance = new SpeechSynthesisUtterance( textToSpeak );
-
-    const voices = speechSynthesis.getVoices();
-    console.log(voices);
-    
-    utterance.voice = voices[0];
+    const utterance = new SpeechSynthesisUtterance( textToSpeak );   
+    utterance.voice = voices[2];
 
     speechSynthesis.speak(utterance);
   }
@@ -52,13 +72,15 @@ export const useTraductor = () => {
   return {
     // Properties
     ...traductorState,
-    text,
+    fetching,
 
     // Methods
-    ChangeSelectedLanguage,
+    changeSelectedLanguage,
     copyToClipboard,
     handleText,
+    selectLanguage,
     speak,
     swipeLanguages,
+    translateText,
   };
 }

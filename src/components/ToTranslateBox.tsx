@@ -8,18 +8,18 @@ import { MyButton } from './MyButton';
 export const ToTranslatedBox = () => {
 
   const { 
-    to, translated, languagesToUse, selectTo,
-    copyToClipboard, ChangeSelectedLanguage, swipeLanguages, speak
+    to, translated, languagesToUse, selectTo, fetching,
+    copyToClipboard, changeSelectedLanguage, swipeLanguages, speak, selectLanguage
   } = useTraductor();
 
   return (
-    <article className="box">
+    <article className="box" style={{ background: '#121826cc'}}>
 
       <div className="row">
 
         {
           to.map( language => (
-            <MyButton functionEvent={ () => ChangeSelectedLanguage({ type: 'changeTOLanguages', payload: language }) }
+            <MyButton functionEvent={ () => changeSelectedLanguage({ type: 'changeTOLanguages', payload: language }) }
               id={ language.iso }
               key={ language.iso } 
               selected={ selectTo.iso === language.iso }
@@ -28,9 +28,17 @@ export const ToTranslatedBox = () => {
           ))
         }
 
-        <select className="myButton text-button" style={{ marginRight: 'auto' }}>
+        <select
+          onChange={ (e) => selectLanguage({ type: 'selectTOLanguage', e }) }
+          className="myButton text-button" 
+          style={{ marginRight: 'auto' }}
+        >
           { languagesToUse.map( language => (
-            <option key={ language.iso } value={ language.iso }>{ language.name }</option>
+            <option key={ language.iso } 
+              value={ JSON.stringify( language ) }
+            >
+              { language.name }
+            </option>
           ))}
         </select>
 
@@ -44,7 +52,7 @@ export const ToTranslatedBox = () => {
 
       <textarea 
         className="text-box" 
-        value={ translated }
+        value={ fetching ? 'Traducting...' : translated }
         disabled
       />
 
