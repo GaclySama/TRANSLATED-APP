@@ -19,25 +19,25 @@ export const traductorReducer = (  state: InitialState, action: ActionType ): In
 
     case 'changeFROMLanguages': 
       {
-        const { exist } = ManageObjects.exitsIn({ container: state.to, item: action.payload });
+        const { existSelected } = ManageObjects.exitsAndIsSelected({ container: state.to, item: action.payload });
 
         return {
           ...state,
           text: '',
           from: state.from.map( (language) => { return { ...language, selected: !language.selected } } ),
-          to  : exist ? ManageObjects.swipeLangSelected( state.to ) : [ ...state.to ],
+          to  : existSelected ? ManageObjects.swipeLangSelected( state.to ) : [ ...state.to ],
         }
       };
 
     case 'changeTOLanguages': 
       {
-        const { exist } = ManageObjects.exitsIn({ container: state.from, item: action.payload });
+        const { existSelected } = ManageObjects.exitsAndIsSelected({ container: state.from, item: action.payload });
 
         return {
           ...state,
           translated: '',
           to: state.to.map( (language) => { return { ...language, selected: !language.selected } }),
-          from: exist ? ManageObjects.swipeLangSelected( state.from ) : [ ...state.from ],
+          from: existSelected ? ManageObjects.swipeLangSelected( state.from ) : [ ...state.from ],
         }
       };
 

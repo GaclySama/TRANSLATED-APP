@@ -39,6 +39,9 @@ export const useTraductor = () => {
 
     const { lang: fromLang } = ManageObjects.indexOfSelected( from );
     const { lang: toLang } = ManageObjects.indexOfSelected( to );
+
+    console.log('search');
+    
     
     const { textTraduced } = await getTextTranslated({ text, from: fromLang.iso, to: toLang.iso });
 
