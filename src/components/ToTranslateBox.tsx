@@ -23,6 +23,7 @@ export const ToTranslatedBox = () => {
               id={ language.iso }
               key={ language.iso } 
               selected={ language.selected }
+              disabled={ language.selected }
               text={ language.name }
             />
           ))

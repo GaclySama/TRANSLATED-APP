@@ -57,6 +57,7 @@ export interface InitialState {
   from          : Languages[],
   languagesToUse: Languages[],
   text          : string, 
+  prevText          : string, 
   to            : Languages[],
   translated    : string,
 }
@@ -68,3 +69,4 @@ export type ActionType =
   | { type: 'changeText', payload: string }
   | { type: 'selectFROMLanguage' | 'selectTOLanguage', payload: Languages }
   | { type: 'translate', payload: string }
+  | { type: 'detect' }

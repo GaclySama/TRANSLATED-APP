@@ -5,16 +5,24 @@ export const traductorReducer = (  state: InitialState, action: ActionType ): In
 
   switch ( action.type ) {
 
+    case 'detect':
+      return {
+        ...state,
+        detect: !state.detect,
+      };
+
     case 'changeText':
       return {
         ...state,
-        text: action.payload
+        text: action.payload,
       };
 
     case 'translate':
       return {
         ...state,
+        text: state.text.trimStart().trimEnd().replace(/\s{2,}/g, ' '),
         translated: action.payload,
+        prevText: state.text.trimStart().trimEnd().replace(/\s{2,}/g, ' '),
       };
 
     case 'changeFROMLanguages': 
@@ -24,6 +32,8 @@ export const traductorReducer = (  state: InitialState, action: ActionType ): In
         return {
           ...state,
           text: '',
+          detect: false,
+          prevText: '',
           from: state.from.map( (language) => { return { ...language, selected: !language.selected } } ),
           to  : existSelected ? ManageObjects.swipeLangSelected( state.to ) : [ ...state.to ],
         }
@@ -36,6 +46,7 @@ export const traductorReducer = (  state: InitialState, action: ActionType ): In
         return {
           ...state,
           translated: '',
+          prevText: '',
           to: state.to.map( (language) => { return { ...language, selected: !language.selected } }),
           from: existSelected ? ManageObjects.swipeLangSelected( state.from ) : [ ...state.from ],
         }
@@ -51,6 +62,7 @@ export const traductorReducer = (  state: InitialState, action: ActionType ): In
         return {
           ...state,
           text: '',
+          prevText: '',
           from: ManageObjects.swipeLangSelected( state.from ),
           to: toExistSelected ? ManageObjects.swipeLangSelected( state.to ) : [ ...state.to ]
         }
@@ -62,6 +74,7 @@ export const traductorReducer = (  state: InitialState, action: ActionType ): In
         return {
           ...state,
           text: '',
+          prevText: '',
           from:  state.from.with( position, action.payload ),
           to: toExistSelected ? ManageObjects.swipeLangSelected( state.to ) : [ ...state.to ],
         }
@@ -82,6 +95,7 @@ export const traductorReducer = (  state: InitialState, action: ActionType ): In
         return {
           ...state,
           translated: '',
+          prevText: '',
           to: ManageObjects.swipeLangSelected( state.to ),
           from: fromExistSelected ? ManageObjects.swipeLangSelected( state.from ) : [ ...state.from ]
         }
@@ -93,6 +107,7 @@ export const traductorReducer = (  state: InitialState, action: ActionType ): In
         return {
           ...state,
           translated: '',
+          prevText: '',
           to:  state.to.with( position, action.payload ),
           from: fromExistSelected ? ManageObjects.swipeLangSelected( state.from ) : [ ...state.from ],
         };

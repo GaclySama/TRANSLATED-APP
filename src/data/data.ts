@@ -12,6 +12,7 @@ export const INITIAL_STATE: InitialState = {
   ],
   languagesToUse: [],
   text: 'Hello, how are you?',
+  prevText: 'Hello, how are you?',
   translated: 'Bonjour comment allez-vous?',
   detect: false,
 };

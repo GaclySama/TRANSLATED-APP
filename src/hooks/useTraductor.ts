@@ -10,28 +10,31 @@ const voices = speechSynthesis.getVoices();
 export const useTraductor = () => {
 
   const { traductorState, dispatch } = useContext( TraductorContext );
-  const [ prevText, setPrevText ] = useState('Hello, how are you?');
   const [ fetching, setFetching ] = useState( false );
 
-  const { text, translated, from, to } = traductorState;
+  const { text, from, to, detect, prevText } = traductorState;
 
   const swipeLanguages = () => {
     return dispatch({ type: 'swipe' });
   };
 
   const changeSelectedLanguage = ( { type, payload } : { type: 'changeTOLanguages' | 'changeFROMLanguages', payload: Languages } ) => {
-    setPrevText( '' );
     return dispatch({ type, payload });
   };
 
   const selectLanguage = (  { type, e }: {type: 'selectFROMLanguage' | 'selectTOLanguage', e: React.ChangeEvent<HTMLSelectElement>} ) => {
-    setPrevText( '' );
     dispatch({ type: type, payload: JSON.parse( e.target.value ) })
   };
 
   const translateText = async () => {
 
-    if ( fetching || ( prevText === text && translated !== '' ) ) return;
+    if ( fetching ||  ( prevText === text ) || (text.trim() === '' ) ) return;
+
+    const regex = /^[a-zA-ZÀ-ÿ0-9](?:[a-zA-ZÀ-ÿ0-9\s]|[.,;:!?-](?![.,;:!?-]))*$/;  
+
+    if ( !regex.test( text ) ) {
+      return dispatch({ type: 'translate' , payload: 'Text not valid...' } );
+    }
 
     setFetching( true );
 
@@ -39,19 +42,17 @@ export const useTraductor = () => {
 
     const { lang: fromLang } = ManageObjects.indexOfSelected( from );
     const { lang: toLang } = ManageObjects.indexOfSelected( to );
-
-    console.log('search');
     
-    
-    const { textTraduced } = await getTextTranslated({ text, from: fromLang.iso, to: toLang.iso });
+    const { textTraduced } = await getTextTranslated({ text, from: detect ? 'Autodetect' : fromLang.iso, to: toLang.iso });
 
     setFetching(false);
-    setPrevText( text );
 
     dispatch({ type: 'translate' ,payload: textTraduced } );
   }
 
-  // TODO: Dispatch: detectLanguage
+  const detectLanguage = () => {
+    dispatch({ type: 'detect' });
+  }
 
   const handleText = ( { target }: ChangeEvent<HTMLTextAreaElement> ) => {
     if ( target.value.length > 500 ) return;
@@ -86,5 +87,6 @@ export const useTraductor = () => {
     speak,
     swipeLanguages,
     translateText,
+    detectLanguage,
   };
 }

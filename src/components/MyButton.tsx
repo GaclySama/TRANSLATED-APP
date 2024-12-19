@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const MyButton = ({ 
-  id, personalClass = '', rigthIcon, selected, styles, text,leftIcon,
+  id, personalClass = '', rigthIcon, selected, styles, text,leftIcon, disabled,
   functionEvent = () => {}
 }: Props) => {
 
@@ -33,7 +33,7 @@ export const MyButton = ({
         ...styles,
       }}
       onClick={ handleEvent }
-      disabled={ selected }
+      disabled={ disabled }
     >
       { leftIcon && leftIcon }
       { text && text }

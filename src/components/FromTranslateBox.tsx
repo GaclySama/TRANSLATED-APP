@@ -7,16 +7,17 @@ import { MyButton } from './MyButton';
 export const FromTranslateBox = () => {
 
   const {
-    from, text, languagesToUse, fetching,
-    copyToClipboard, handleText, changeSelectedLanguage, speak, selectLanguage, translateText
+    from, text, languagesToUse, fetching, detect,
+    copyToClipboard, handleText, changeSelectedLanguage, speak, selectLanguage, translateText, detectLanguage
   } = useTraductor();
 
   return (
     <article className="box">
 
       <div className="row">
-        <MyButton
-          text="Detect Language" 
+        <MyButton functionEvent={ detectLanguage }
+          text="Detect Language"
+          selected={ detect }
         />
         
         {
@@ -25,7 +26,8 @@ export const FromTranslateBox = () => {
               key={ language.iso }
               id={ language.iso }
               text={ language.name }
-              selected={ language.selected }
+              selected={ detect ? false : language.selected }
+              disabled={ detect ? false : language.selected }
             />
           ))
         }
@@ -70,7 +72,7 @@ export const FromTranslateBox = () => {
           personalClass="translate-button"
           styles={{ display: 'flex '}}
           text="Translate"
-          selected={ fetching }
+          disabled={ fetching }
         />
       </div>
 
