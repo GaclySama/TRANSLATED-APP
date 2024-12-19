@@ -49,16 +49,15 @@ export interface ResponseData {
 export interface Languages {
   name: string;
   iso : string;
+  selected: boolean;
 }
 
 export interface InitialState {
   detect        : boolean,
   from          : Languages[],
   languagesToUse: Languages[],
-  selectFrom    : Languages,
-  selectTo      : Languages,
-  to            : Languages[],
   text          : string, 
+  to            : Languages[],
   translated    : string,
 }
 

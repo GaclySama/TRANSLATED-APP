@@ -2,7 +2,7 @@ import { ChangeEvent, useContext, useState } from 'react';
 import { TraductorContext } from '../context/TraductorContext';
 import { Languages } from '../interfaces/interfaces';
 import { getTextTranslated } from '../actions/getTextTranslated';
-
+import { ManageObjects } from '../helpers/ManageObjects';
 
 
 const voices = speechSynthesis.getVoices();
@@ -13,10 +13,7 @@ export const useTraductor = () => {
   const [ prevText, setPrevText ] = useState('Hello, how are you?');
   const [ fetching, setFetching ] = useState( false );
 
-  const { selectFrom, selectTo, text, translated } = traductorState;
-
-
-  // * Dispatch
+  const { text, translated, from, to } = traductorState;
 
   const swipeLanguages = () => {
     return dispatch({ type: 'swipe' });
@@ -35,11 +32,15 @@ export const useTraductor = () => {
   const translateText = async () => {
 
     if ( fetching || ( prevText === text && translated !== '' ) ) return;
+
     setFetching( true );
 
     dispatch({ type: 'translate' , payload: 'Loading...' } );
+
+    const { lang: fromLang } = ManageObjects.indexOfSelected( from );
+    const { lang: toLang } = ManageObjects.indexOfSelected( to );
     
-    const { textTraduced } = await getTextTranslated({ text, from: selectFrom.iso, to: selectTo.iso });
+    const { textTraduced } = await getTextTranslated({ text, from: fromLang.iso, to: toLang.iso });
 
     setFetching(false);
     setPrevText( text );

@@ -7,7 +7,7 @@ import { MyButton } from './MyButton';
 export const FromTranslateBox = () => {
 
   const {
-    from, selectFrom, text, languagesToUse, fetching,
+    from, text, languagesToUse, fetching,
     copyToClipboard, handleText, changeSelectedLanguage, speak, selectLanguage, translateText
   } = useTraductor();
 
@@ -25,7 +25,7 @@ export const FromTranslateBox = () => {
               key={ language.iso }
               id={ language.iso }
               text={ language.name }
-              selected={ selectFrom.iso === language.iso }
+              selected={ language.selected }
             />
           ))
         }

@@ -4,113 +4,123 @@ import { ActionType, InitialState } from '../interfaces/interfaces';
 export const traductorReducer = (  state: InitialState, action: ActionType ): InitialState => {
 
   switch ( action.type ) {
-    case 'swipe':
-      {
-        const updatedFrom = state.from.some( (language) => language.iso === state.selectTo.iso)
-        ? state.from
-        : [{ name: state.selectTo.name, iso: state.selectTo.iso }, ...state.from].slice(0, 2);
-    
-      const updatedTo = state.to.some((language) => language.iso === state.selectFrom.iso )
-        ? state.to
-        : [{ name: state.selectFrom.name, iso: state.selectFrom.iso }, ...state.to].slice(0, 2);
-
-      return {
-        ...state,
-        from: updatedFrom,
-        selectFrom: state.selectTo,
-        selectTo: state.selectFrom,
-        text: state.translated,
-        to: updatedTo,
-        translated: state.text,
-       };
-      }
-
-    case 'changeFROMLanguages': 
-      return {
-        ...state,
-        from: state.from.filter( language => ( action.payload.iso === language.iso ) ? state.from : [ action.payload, state.from[1]] ),
-        translated: '',
-        selectFrom: action.payload,
-        selectTo: ( action.payload.iso === state.selectTo.iso ) 
-                    ? ( ( action.payload.iso === state.to[1].iso ) ? state.to[0] : state.to[1] ) 
-                    : state.selectTo,
-       };
-
-    case 'changeTOLanguages': 
-      return {
-        ...state,
-        to: state.to.filter( language => ( action.payload.iso === language.iso ) ? state.to : [ action.payload, state.to[1]] ),
-        translated: '',
-        selectTo: action.payload,
-        selectFrom: ( action.payload.iso === state.selectFrom.iso ) 
-                      ? ( ( action.payload.iso === state.from[1].iso ) ? state.from[0] : state.from[1] ) 
-                      : state.selectFrom,
-       };
 
     case 'changeText':
-
-    return {
-      ...state,
-      text: action.payload
-    }
-
-    case 'selectFROMLanguage': 
-    {
-      const exist = state.from.some( ( language ) => ManageObjects.compare( language, action.payload ) );
-
-      const index = ( ManageObjects.compare( state.selectTo, action.payload ) ) 
-      ? state.to.findIndex( ( language ) => language !== state.selectTo ) 
-      : null;
-
-       if (exist) {
-         return {
-             ...state,
-             selectFrom: action.payload,
-             selectTo: ( index !== null ) ? state.to[index] : state.selectTo,
-           }
-       } else {
-          
-        return {
-          ...state,
-          from: [ action.payload, ...state.from ].slice( 0, 2 ),
-          selectFrom: action.payload,
-          selectTo: ( index !== null ) ? state.to[index] : state.selectTo,
-        }
-      }
-    }
-
-    case 'selectTOLanguage': 
-    {
-      const exist = state.to.some( ( language ) => ManageObjects.compare( language, action.payload ) );
-
-      const index = ( ManageObjects.compare( state.selectFrom, action.payload ) ) 
-      ? state.from.findIndex( ( language ) => language !== state.selectFrom ) 
-      : null;
-
-      if (exist) {
-        return {
-            ...state,
-            selectTo: action.payload,
-            selectFrom: ( index !== null ) ? state.from[index] : state.selectFrom,
-          }
-      } else {
-         
-        return {
-          ...state,
-          to: [ action.payload, ...state.to ].slice( 0, 2 ),
-          translated: '',
-          selectTo: action.payload,
-          selectFrom: ( index !== null ) ? state.from[index] : state.selectFrom,
-        }
-     }
-    }
+      return {
+        ...state,
+        text: action.payload
+      };
 
     case 'translate':
       return {
         ...state,
         translated: action.payload,
-      }
+      };
 
+    case 'changeFROMLanguages': 
+      {
+        const { exist } = ManageObjects.exitsIn({ container: state.to, item: action.payload });
+
+        return {
+          ...state,
+          text: '',
+          from: state.from.map( (language) => { return { ...language, selected: !language.selected } } ),
+          to  : exist ? ManageObjects.swipeLangSelected( state.to ) : [ ...state.to ],
+        }
+      };
+
+    case 'changeTOLanguages': 
+      {
+        const { exist } = ManageObjects.exitsIn({ container: state.from, item: action.payload });
+
+        return {
+          ...state,
+          translated: '',
+          to: state.to.map( (language) => { return { ...language, selected: !language.selected } }),
+          from: exist ? ManageObjects.swipeLangSelected( state.from ) : [ ...state.from ],
+        }
+      };
+
+    case 'selectFROMLanguage': 
+    {
+      const { exist: fromExist, existSelected: fromExistSelected } = ManageObjects.exitsAndIsSelected({ container: state.from, item: action.payload });
+
+      const { existSelected: toExistSelected } = ManageObjects.exitsAndIsSelected({ container: state.to, item: action.payload });
+      
+      if ( fromExist && !fromExistSelected ) {
+        return {
+          ...state,
+          text: '',
+          from: ManageObjects.swipeLangSelected( state.from ),
+          to: toExistSelected ? ManageObjects.swipeLangSelected( state.to ) : [ ...state.to ]
+        }
+      };
+
+      if ( !fromExist ) {
+        const { position } = ManageObjects.indexOfSelected( state.from );
+
+        return {
+          ...state,
+          text: '',
+          from:  state.from.with( position, action.payload ),
+          to: toExistSelected ? ManageObjects.swipeLangSelected( state.to ) : [ ...state.to ],
+        }
+      };
+
+      return {
+        ...state,
+      };
+    };
+
+    case 'selectTOLanguage': 
+    {
+      const { exist: toExist,existSelected: toExistSelected } = ManageObjects.exitsAndIsSelected({ container: state.to, item: action.payload });
+
+      const { existSelected: fromExistSelected } = ManageObjects.exitsAndIsSelected({ container: state.from, item: action.payload });
+
+      if ( toExist && !toExistSelected ) {
+        return {
+          ...state,
+          translated: '',
+          to: ManageObjects.swipeLangSelected( state.to ),
+          from: fromExistSelected ? ManageObjects.swipeLangSelected( state.from ) : [ ...state.from ]
+        }
+      };
+
+      if ( !toExist ) {
+        const { position } = ManageObjects.indexOfSelected( state.to );
+
+        return {
+          ...state,
+          translated: '',
+          to:  state.to.with( position, action.payload ),
+          from: fromExistSelected ? ManageObjects.swipeLangSelected( state.from ) : [ ...state.from ],
+        };
+      };
+
+      return {
+        ...state
+      }
+      
+    };
+    
+    case 'swipe':
+      {
+        const { lang: fromLang, position: fromSelected } = ManageObjects.indexOfSelected( state.from );
+        const { lang: toLang, position: toSelected     } = ManageObjects.indexOfSelected( state.to   );
+
+        const { exist: fromInTo } = ManageObjects.exitsIn( { container: state.to  , item: fromLang } );
+        const { exist: toInFrom } = ManageObjects.exitsIn( { container: state.from, item: toLang   } );
+      
+        return {
+          ...state,
+          from: toInFrom ? ManageObjects.swipeLangSelected( state.from ) : state.from.with( fromSelected, toLang ),
+          to  : fromInTo ? ManageObjects.swipeLangSelected( state.to   ) : state.to.with( toSelected, fromLang   ),
+          text: state.text ? state.translated : '',
+          translated: state.translated ? state.text : '',
+        };
+      };
+  
     default:
       return state;
   }

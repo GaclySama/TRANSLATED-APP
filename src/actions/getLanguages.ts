@@ -17,6 +17,7 @@ export const getLanguages = async () => {
       .map((language) => ({
         name: Formatter.notLonger( language.name ),
         iso: language.rfc3066,
+        selected: true,
       }))
       .filter(( language, index, newData ) =>       
         newData.findIndex((item) => (item.name === language.name && item.iso === language.iso) ) === index
